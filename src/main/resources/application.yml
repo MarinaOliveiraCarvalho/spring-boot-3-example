@@ -1,0 +1,24 @@
+server:
+  port: 4545
+  #port: ${PORT:0}
+  servlet:
+    context-path: /crud
+spring:
+  application:
+    name: crud-example
+  datasource:
+    url: jdbc:postgresql://localhost:5432/marina?createDatabaseIfNotExist=true&useSSL=false
+    username: postgres
+    password: toor
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        ddl-auto: update
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
