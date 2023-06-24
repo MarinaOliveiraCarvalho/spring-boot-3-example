@@ -68,7 +68,7 @@ public class PublishingService {
             log.info("remove like on publishing: {}", idPublishing);
             Publishing publishing = findLikeById(idPublishing);
             if(publishing.getLikes() > 0 ){
-                publishing.setLikes(publishing.getLikes() + 1);
+                publishing.setLikes(publishing.getLikes() - 1);
                 return likeRepository.saveAndFlush(publishing);
             }
             return publishing;
