@@ -22,5 +22,6 @@ public class Publishing {
 
     private String comments;
 
+    @Column(columnDefinition = "TEXT")
     private String img;
 }

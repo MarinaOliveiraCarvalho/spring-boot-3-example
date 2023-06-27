@@ -1,7 +1,9 @@
 package com.crud.simple.services;
 
+import com.crud.simple.dto.PublishingAddLikeDto;
 import com.crud.simple.dto.PublishingDto;
 import com.crud.simple.models.Publishing;
+import com.crud.simple.publisher.LikeAddPublisher;
 import com.crud.simple.repository.PublishingRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +20,9 @@ public class PublishingService {
 
     @Autowired
     PublishingRepository likeRepository;
+
+    @Autowired
+    LikeAddPublisher likeAddPublisher;
 
     public Publishing findLikeById(UUID idPublishing){
         try {
@@ -50,6 +55,17 @@ public class PublishingService {
         }
     }
 
+
+    public void asyncAddLikeById(UUID idPublishing){
+        try {
+            log.info("Async add like on publishing: {}", idPublishing);
+            PublishingAddLikeDto publishingAddLikeDto = new PublishingAddLikeDto(idPublishing.toString());
+            likeAddPublisher.send(publishingAddLikeDto);
+        }catch (Exception e){
+            log.error(e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND," ERROR add Like on publishing: " + idPublishing );
+        }
+    }
 
     public Publishing addLikeById(UUID idPublishing){
         try {
